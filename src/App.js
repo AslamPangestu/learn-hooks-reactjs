@@ -1,64 +1,40 @@
 import React, { useState } from 'react'
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       count: 0
-//     }
-//     this.handleClickIncrease = this.handleClickIncrease.bind(this)
-//     this.handleClickDecrease = this.handleClickDecrease.bind(this)
-//   }
-
-//   handleClickIncrease() {
-//     this.setState(prevState => ({
-//       count: prevState.count + 1
-//     }))
-//   }
-
-//   handleClickDecrease() {
-//     this.setState(prevState => ({
-//       count: prevState.count - 1
-//     }))
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <button onClick={this.handleClickIncrease}>Increase</button>
-//         <h1>{this.state.count}</h1>
-//         <button onClick={this.handleClickDecrease}>Decrease</button>
-//       </div>
-//     )
-//   }
-// }
-
 function App() {
-  const [count, setCount] = useState(0)
-  // const handleIncrease = () => setCount(count + 1)
-  // const handleDecrease = () => setCount(count - 1)
-  // const handleReset = () => setCount(0)
-  function handleIncrease() {
-    setCount(prevCount => {
-      return prevCount + 1
-    })
-  }
-  const handleDecrease = () =>
-    setCount(prevCount => {
-      return prevCount - 1
-    })
+  const [state, setState] = useState({
+    city: '',
+    country: ''
+  })
 
-  function handleReset() {
-    setCount(prevCount => {
-      return 0
-    })
+  function handleCityChange(event) {
+    setState({ ...state, city: event.target.value })
+  }
+  function handleCountryChange(event) {
+    setState({ ...state, country: event.target.value })
   }
   return (
     <div>
-      <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <button onClick={handleReset}>Reset</button>
-      <h1>{count}</h1>
+      <form>
+        <div>
+          <input
+            type='text'
+            placeholder='City'
+            value={state.city}
+            onChange={handleCityChange}
+          />
+        </div>
+        <div>
+          <input
+            type='text'
+            placeholder='Country'
+            value={state.country}
+            onChange={handleCountryChange}
+          />
+        </div>
+      </form>
+      <h1>RESULT</h1>
+      <h3>City: {state.city}</h3>
+      <h3>Country: {state.country}</h3>
     </div>
   )
 }
