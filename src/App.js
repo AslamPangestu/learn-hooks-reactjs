@@ -1,16 +1,31 @@
 import React, { Component } from 'react'
 
-function Box(props) {
-  return (
-    <div>
-      <h1>Statelsess Component</h1>
-      <h1>{props.text}</h1>
-      <h2>{props.subtitle}</h2>
-    </div>
-  )
+class Button extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activated: false
+    }
+  }
+
+  handleActiveChange = () => {
+    // this.setState({ activated: !this.state.activated })
+    this.setState(prevState => ({
+      activated: !prevState.activated
+    }))
+  }
+
+  render() {
+    const btnText = this.state.activated
+      ? this.props.activeText
+      : this.props.inactiveText
+    return <button onClick={this.handleActiveChange}>{btnText}</button>
+  }
 }
-function App() {
-  return <Box text='Testing' subtitle='Test Subtitle' />
+class App extends Component {
+  render() {
+    return <Button activeText='On' inactiveText='Off' />
+  }
 }
 
 export default App
