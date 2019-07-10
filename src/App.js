@@ -35,21 +35,30 @@ import React, { useState } from 'react'
 
 function App() {
   const [count, setCount] = useState(0)
-  // const handleClickIncrease = () => setCount(count + 1)
-  // const handleClickDecrease = () => setCount(count - 1)
-  const handleClickIncrease = () =>
+  // const handleIncrease = () => setCount(count + 1)
+  // const handleDecrease = () => setCount(count - 1)
+  // const handleReset = () => setCount(0)
+  function handleIncrease() {
     setCount(prevCount => {
       return prevCount + 1
     })
-  const handleClickDecrease = () =>
+  }
+  const handleDecrease = () =>
     setCount(prevCount => {
       return prevCount - 1
     })
+
+  function handleReset() {
+    setCount(prevCount => {
+      return 0
+    })
+  }
   return (
     <div>
-      <button onClick={handleClickIncrease}>Increase</button>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={handleReset}>Reset</button>
       <h1>{count}</h1>
-      <button onClick={handleClickDecrease}>Decrease</button>
     </div>
   )
 }
