@@ -1,38 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-function App() {
-  const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
+function Counter() {
+  const [count, setCount] = useState(0)
+  function handleIncrease() {
+    setCount(prevCount => {
+      return prevCount + 1
+    })
+  }
 
-  function handleCityChange(event) {
-    setCity(event.target.value)
-  }
-  function handleCountryChange(event) {
-    setCountry(event.target.value)
-  }
+  const handleDecrease = () =>
+    setCount(prevCount => {
+      return prevCount - 1
+    })
+
+  useEffect(() => {
+    console.log(`I'm Inside useEffect func. The current count = ${count}`)
+
+    return () => {
+      console.log(`Remove anytihng, last count = ${count}`)
+    }
+  })
+
   return (
     <div>
-      <form>
-        <div>
-          <input
-            type='text'
-            placeholder='City'
-            value={city}
-            onChange={handleCityChange}
-          />
-        </div>
-        <div>
-          <input
-            type='text'
-            placeholder='Country'
-            value={country}
-            onChange={handleCountryChange}
-          />
-        </div>
-      </form>
-      <h1>RESULT</h1>
-      <h3>City: {city}</h3>
-      <h3>Country: {country}</h3>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <h1>{count}</h1>
+    </div>
+  )
+}
+function App() {
+  const [visibel, setVisibel] = useState(false)
+  return (
+    <div>
+      <button onClick={() => setVisibel(!visibel)}>Show/Hide Component</button>
+      {visibel && <Counter />}
     </div>
   )
 }
