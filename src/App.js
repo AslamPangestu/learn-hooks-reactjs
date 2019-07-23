@@ -1,31 +1,55 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 function App() {
-  const userText = useKeyPress('Budi')
   return (
     <div>
-      <h1>Feel free to type</h1>
-      <blockquote>{userText}</blockquote>
+      <Display start={10} />
+      <Display start={20} />
+      <FancyDisplay start={30} />
     </div>
   )
 }
 
-function useKeyPress(startingValue) {
-  const [userText, setUserText] = useState(startingValue)
-  function handleUserKeyPress(event) {
-    const { key, keyCode } = event
-    if (keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
-      setUserText(`${userText}${key}`)
-    }
+function useCounter(startingValue) {
+  const [count, setCount] = useState(startingValue)
+  function handleIncrease() {
+    setCount(prevCount => {
+      return prevCount + 1
+    })
   }
-  useEffect(() => {
-    window.addEventListener('keydown', handleUserKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handleUserKeyPress)
-    }
-  })
+  function handleDecrease() {
+    setCount(prevCount => {
+      return prevCount - 1
+    })
+  }
 
-  return userText
+  return {
+    count,
+    handleIncrease,
+    handleDecrease
+  }
+}
+
+function Display(props) {
+  const { count, handleIncrease, handleDecrease } = useCounter(props.start)
+  return (
+    <div>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <h1>{count}</h1>
+    </div>
+  )
+}
+
+function FancyDisplay(props) {
+  const { count, handleIncrease, handleDecrease } = useCounter(props.start)
+  return (
+    <section>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <h2>{count}</h2>
+    </section>
+  )
 }
 
 export default App
