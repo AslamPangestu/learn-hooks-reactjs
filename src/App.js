@@ -1,24 +1,11 @@
 import React, { useState } from 'react'
 
 function App() {
-  const { value: name, changeHandler: changeName } = useInputText()
-  const { value: surename, changeHandler: changeSurename } = useInputText()
-  const { value: age, changeHandler: changeAge } = useInputText()
   return (
     <form>
-      <input
-        type='text'
-        placeholder='Name'
-        value={name}
-        onChange={changeName}
-      />
-      <input
-        type='text'
-        placeholder='Surename'
-        value={surename}
-        onChange={changeSurename}
-      />
-      <input type='number' placeholder='Age' value={age} onChange={changeAge} />
+      <input type='text' placeholder='Name' {...useInputText()} />
+      <input type='text' placeholder='Surename' {...useInputText()} />
+      <input type='number' placeholder='Age' {...useInputText()} />
     </form>
   )
 }
@@ -26,13 +13,13 @@ function App() {
 function useInputText() {
   const [value, setValue] = useState('')
 
-  function changeHandler(event) {
+  function onChange(event) {
     setValue(event.target.value)
   }
 
   return {
     value,
-    changeHandler
+    onChange
   }
 }
 
