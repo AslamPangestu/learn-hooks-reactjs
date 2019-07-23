@@ -1,35 +1,31 @@
-import React, { createContext, useState, useContext } from 'react'
-
-const NameContext = createContext()
+import React, { useState, useEffect } from 'react'
 
 function App() {
-  const [name, setName] = useState('Budi')
+  const userText = useKeyPress('Budi')
   return (
-    <NameContext.Provider value={name}>
-      <Child />
-    </NameContext.Provider>
-  )
-}
-
-function Child() {
-  return (
-    <section className='child'>
-      <GrandChild />
-    </section>
-  )
-}
-
-function GrandChild() {
-  return (
-    <div className='child'>
-      <Button />
+    <div>
+      <h1>Feel free to type</h1>
+      <blockquote>{userText}</blockquote>
     </div>
   )
 }
 
-function Button() {
-  const name = useContext(NameContext)
-  return <button>{name}</button>
+function useKeyPress(startingValue) {
+  const [userText, setUserText] = useState(startingValue)
+  function handleUserKeyPress(event) {
+    const { key, keyCode } = event
+    if (keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
+      setUserText(`${userText}${key}`)
+    }
+  }
+  useEffect(() => {
+    window.addEventListener('keydown', handleUserKeyPress)
+    return () => {
+      window.removeEventListener('keydown', handleUserKeyPress)
+    }
+  })
+
+  return userText
 }
 
 export default App
